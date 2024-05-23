@@ -18,7 +18,7 @@ public class TaskController {
                 .stream()
                 .map(TaskDTO::toDTO)
                 .toList();
-    model.addAttribute("taskList", taskList);
-    return "tasks/list";
+        model.addAttribute("taskList", taskList);
+        return "tasks/list";
     }
 }
