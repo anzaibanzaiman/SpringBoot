@@ -14,7 +14,7 @@ public class TaskController {
 
     @GetMapping("/tasks")
     public String list(Model model){
-        var taskList = taskService.find() //<TaskEntity> -> List<TaskDTO>
+        var taskList = taskService.find() //List<TaskEntity> -> List<TaskDTO>
                 .stream()
                 .map(TaskDTO::toDTO)
                 .toList();
