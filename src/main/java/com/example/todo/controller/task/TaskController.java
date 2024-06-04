@@ -73,6 +73,8 @@ public class TaskController {
             model.addAttribute("mode", "EDIT");
             return "tasks/form";
         }
+        var entity = form.toEntity(id);
+        taskService.update(entity);
         return "redirect:/tasks/{id}";
     }
 }
