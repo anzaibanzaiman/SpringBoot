@@ -48,4 +48,12 @@ public class TaskController {
         taskService.create(form.toEntity());
         return "redirect:/tasks";
     }
+    
+    // GET /tasks/{taskId}/editForm
+    @GetMapping("/{id}/editForm")
+    public String showEditForm(@PathVariable("id") long id, Model model) {
+        TaskForm form = new TaskForm("hoge", "hoge", "TODO");
+        model.addAttribute("taskForm", form);
+        return "tasks/form";
+    }
 }
