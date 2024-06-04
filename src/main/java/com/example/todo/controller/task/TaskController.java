@@ -63,7 +63,16 @@ public class TaskController {
     }
     
     @PutMapping("{id}") // PUT /tasks/{id}
-    public String update(@PathVariable("id") long id ){
+    public String update(
+        @PathVariable("id") long id,
+        @Validated @ModelAttribute TaskForm form,
+        BindingResult bindingResult,
+        Model model
+    ){
+        if (bindingResult.hasErrors()){
+            model.addAttribute("mode", "EDIT");
+            return "tasks/form";
+        }
         return "redirect:/tasks/{id}";
     }
 }
