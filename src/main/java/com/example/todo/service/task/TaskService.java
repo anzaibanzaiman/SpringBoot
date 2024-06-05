@@ -14,7 +14,7 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
 
-    public List<TaskEntity> find(){
+    public List<TaskEntity> find(TaskSearchEntity taskSearchEntity){
         return taskRepository.select();
     }
 
