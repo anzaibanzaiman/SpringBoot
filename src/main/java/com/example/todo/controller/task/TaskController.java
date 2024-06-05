@@ -77,4 +77,11 @@ public class TaskController {
         taskService.update(entity);
         return "redirect:/tasks/{id}";
     }
+
+    // POST /tasks/1 (hidden: _method: delete)
+    // -> DELETE /tasks/1
+    @DeleteMapping("{id}")
+    public String delete(@PathVariable("id") long id) {
+        return "redirect:/tasks";
+    }
 }
