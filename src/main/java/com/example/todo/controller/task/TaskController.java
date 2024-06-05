@@ -27,25 +27,54 @@ public class TaskController {
 
     @GetMapping("/{id}") // GET /tasks/detail
     public String showDetail(@PathVariable("id") long taskId, Model model){
-        var taskEntity = taskService.findById(taskId)
-                .orElseThrow(() -> new IllegalArgumentException("Task not found: id = " + taskId));
-        model.addAttribute("task", TaskDTO.toDTO(taskEntity));
+        var taskDTO = taskService.findById(taskId)
+            .map(TaskDTO::toDTO)
+                .orElseThrow(TaskNotFoundException::new);
+        model.addAttribute("task", taskDTO);
         return "tasks/detail";
     }
 
     // GET /tasks/creationForm
     @GetMapping("/creationForm")
-    public String showCreationForm(@ModelAttribute TaskForm form) {
+    public String showCreationForm(@ModelAttribute TaskForm form, Model model) {
+        model.addAttribute("mode", "CREATE");
         return "tasks/form";
     }
     
     // POST /tasks
     @PostMapping
-    public String create(@Validated TaskForm form, BindingResult bindingResult) {
+    public String create(@Validated TaskForm form, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return showCreationForm(form);
+            return showCreationForm(form, model);
         }
         taskService.create(form.toEntity());
         return "redirect:/tasks";
+    }
+    
+    // GET /tasks/{taskId}/editForm
+    @GetMapping("/{id}/editForm")
+    public String showEditForm(@PathVariable("id") long id, Model model) {
+        var form = taskService.findById(id)
+                .map(TaskForm::formEntity)
+                .orElseThrow(TaskNotFoundException::new);
+        model.addAttribute("taskForm", form);
+        model.addAttribute("mode", "EDIT");
+        return "tasks/form";
+    }
+    
+    @PutMapping("{id}") // PUT /tasks/{id}
+    public String update(
+        @PathVariable("id") long id,
+        @Validated @ModelAttribute TaskForm form,
+        BindingResult bindingResult,
+        Model model
+    ){
+        if (bindingResult.hasErrors()){
+            model.addAttribute("mode", "EDIT");
+            return "tasks/form";
+        }
+        var entity = form.toEntity(id);
+        taskService.update(entity);
+        return "redirect:/tasks/{id}";
     }
 }
