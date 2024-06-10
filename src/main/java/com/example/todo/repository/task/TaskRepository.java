@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface TaskRepository {
     @Select("""
     <script>
-      SELECT id, summary, description, status
+      SELECT id, summary, description, status, dayLimit
       FROM tasks
       <where>
         <if test='condition.summary != null and !condition.summary.isBlank()'>
@@ -29,12 +29,12 @@ public interface TaskRepository {
     """)
     List<TaskEntity> select(@Param("condition") TaskSearchEntity condition);
 
-    @Select("SELECT id, summary, description, status FROM tasks WHERE id = #{taskId}")
+    @Select("SELECT id, summary, description, status, dayLimit FROM tasks WHERE id = #{taskId}")
     Optional<TaskEntity> selectById(@Param("taskId") long taskId);
 
     @Insert("""
-            INSERT INTO tasks (summary, description,status)
-            VALUES (#{task.summary}, #{task.description}, #{task.status})
+            INSERT INTO tasks (summary, description, status, dayLimit)
+            VALUES (#{task.summary}, #{task.description}, #{task.status}, #{dayLimit})
             """)
     void insert(@Param("task") TaskEntity newEntity);
 
@@ -44,6 +44,7 @@ public interface TaskRepository {
               summary     = #{task.summary},
               description = #{task.description},
               status      = #{task.status}
+              dayLimit    = #{task.dayLimit}
             WHERE
               id = #{task.id}
             """)
