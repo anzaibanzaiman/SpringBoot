@@ -94,7 +94,7 @@ public class TaskController {
     }
 
     // POST /tasks
-    @PostMapping
+    @PostMapping("/multiCreationForm")
     public String multiCreate(@Validated TaskForm form, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return showCreationForm(form, model);
