@@ -86,4 +86,20 @@ public class TaskController {
         taskService.delete(id);
         return "redirect:/tasks";
     }
+
+    @GetMapping("/multiCreationForm")
+    public String multiCreationForm() {
+        return "tasks/multiForm";
+
+    }
+
+    // POST /tasks
+    @PostMapping("/multiCreationForm")
+    public String multiCreate(@Validated TaskForm form, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return showCreationForm(form, model);
+        }
+        taskService.multiCreate(form.toEntity());
+        return "redirect:/tasks";
+    }
 }
