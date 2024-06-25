@@ -20,7 +20,7 @@ function addForm() {
     const newElement_dayLimit = newElement.children[3];
     newElement_dayLimit.name = 'description'+i;
 
-    const parentNode = document.getElementById("form");
+    const parentNode = document.getElementById("addTask");
     parentNode.appendChild(newElement);
 
     i++;

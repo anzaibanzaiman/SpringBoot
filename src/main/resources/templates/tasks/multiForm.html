@@ -9,10 +9,11 @@
     <script type="text/javascript" src="/static/js/multiForm.js"></script>
 </head>
 <body>
-<section layout:fragment="content" id="form">
+<section layout:fragment="content">
     <div>
         <form th:action="@{/tasks}"
-              th:method="post">
+              th:method="post"
+              id="form">
             <div id="addTask">
                 <div class="form-group mt-3">
                     <label for="summaryInput" class="form-label">概要</label>

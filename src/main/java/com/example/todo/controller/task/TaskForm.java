@@ -32,14 +32,14 @@ public record TaskForm(
 
     @SneakyThrows
     public TaskEntity toEntity() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         Date date = sdf.parse(dayLimit());
         return new TaskEntity(null, summary(), description(), TaskStatus.valueOf(status()), date);
     }
 
     @SneakyThrows
     public TaskEntity toEntity(long id) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         Date date = sdf.parse(dayLimit());
         return new TaskEntity(id, summary(), description(), TaskStatus.valueOf(status()), date);
     }
