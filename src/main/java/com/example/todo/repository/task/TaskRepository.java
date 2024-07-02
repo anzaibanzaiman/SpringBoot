@@ -52,4 +52,10 @@ public interface TaskRepository {
 
     @Delete("DELETE FROM tasks WHERE id = #{taskId}")
     void delete(@Param("taskId") long id);
+
+    @Insert("""
+            INSERT INTO tasks (summary, description, status, dayLimit)
+            VALUES (#{task.summary}, #{task.description}, #{task.status}, #{dayLimit})
+            """)
+    void multiInsert(@Param("tasks") TaskEntity newEntity);
 }
