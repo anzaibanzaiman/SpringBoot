@@ -37,7 +37,4 @@ public class TaskService {
         taskRepository.delete(id);
     }
 
-    public void multiCreate(TaskEntity newEntity) {
-        taskRepository.multiInsert(newEntity);
-    }
 }

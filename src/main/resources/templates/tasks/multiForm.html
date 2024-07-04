@@ -35,7 +35,9 @@
                     <input type="text" id="dayLimitInput" class="form-control">
                 </div>
             </div>
-            <input type="button" value="追加" onclick="addForm()">
+            <div>
+                <input type="button" value="タスクを追加する" onclick="addForm()" class="mt-3">
+            </div>
             <div class="mt-3">
                 <button type="submit" class="btn btn-primary" th:text="一括登録"></button>
                 <a th:href="@{/tasks}" class="btn btn-secondary">戻る</a>

@@ -88,7 +88,7 @@ public class TaskController {
     }
 
     @GetMapping("/multiCreationForm")
-    public String multiCreationForm() {
+    public String multiCreationForm(@ModelAttribute TaskForm form, Model model) {
         return "tasks/multiForm";
 
     }
@@ -97,9 +97,12 @@ public class TaskController {
     @PostMapping("/multiCreationForm")
     public String multiCreate(@Validated TaskForm form, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return showCreationForm(form, model);
+            return multiCreationForm(form, model);
         }
-        taskService.multiCreate(form.toEntity());
+        var multiList = form;
+        multiList.forEach(multiList ->
+                taskService.create(multiList.toEntity())
+                );
         return "redirect:/tasks";
     }
 }
