@@ -34,7 +34,7 @@ public interface TaskRepository {
 
     @Insert("""
             INSERT INTO tasks (summary, description, status, dayLimit)
-            VALUES (#{task.summary}, #{task.description}, #{task.status}, #{dayLimit})
+            VALUES (#{task.summary}, #{task.description}, #{task.status}, #{task.dayLimit})
             """)
     void insert(@Param("task") TaskEntity newEntity);
 

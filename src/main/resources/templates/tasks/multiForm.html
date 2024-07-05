@@ -5,26 +5,23 @@
       layout:decorate="~{layout/layout}">
 <head>
     <title th:text="タスク一括登録"></title>
-    <script type="text/javascript" src="/static/js/multiForm.js"></script>
 </head>
 <body>
 <section layout:fragment="content">
     <div>
-        <form th:action="@{/tasks}"
-              th:method="post"
-              id="form">
-            <div id="addTask">
+        <form th:action="@{/tasks/multiCreationForm}" th:method="post" th:object="${taskForm}">
+            <template id="template">
                 <div class="form-group mt-3">
                     <label for="summaryInput" class="form-label">概要</label>
-                    <input type="text" id="summaryInput" class="form-control">
+                    <input type="text" id="summaryInput" th:field="*{summary}" class="form-control" name="">
                 </div>
                 <div class="form-group mt-3">
                     <label for="descriptionInput" class="form-label">詳細</label>
-                    <textarea id="descriptionInput" class="form-control" rows="10"></textarea>
+                    <textarea id="descriptionInput" th:field="*{description}" class="form-control" rows="10" name=""></textarea>
                 </div>
                 <div class="form-group mt-3">
                     <label for="statusInput" class="form-label">ステータス</label>
-                    <select id="statusInput" class="form-control">
+                    <select id="statusInput" th:field="*{status}" class="form-control" name="">
                         <option value="TODO">TODO</option>
                         <option value="DOING">DOING</option>
                         <option value="DONE">DONE</option>
@@ -32,18 +29,20 @@
                 </div>
                 <div class="form-group mt-3">
                     <label for="dayLimitInput" class="form-label">期限</label>
-                    <input type="text" id="dayLimitInput" class="form-control">
+                    <input type="text" id="dayLimitInput" th:field="*{dayLimit}" class="form-control" name="">
                 </div>
+            </template>
+            <section id="container"></section>
+            <div>
+                <button onclick="addForm()" type="button" class="mt-3">タスクをさらに追加する</button>
             </div>
             <div>
-                <input type="button" value="タスクを追加する" onclick="addForm()" class="mt-3">
-            </div>
-            <div class="mt-3">
-                <button type="submit" class="btn btn-primary" th:text="一括登録"></button>
-                <a th:href="@{/tasks}" class="btn btn-secondary">戻る</a>
+                <button type="submit" class="btn btn-primary mt-3" th:text="一括登録"></button>
+                <a th:href="@{/tasks}" class="btn btn-secondary mt-3">戻る</a>
             </div>
         </form>
     </div>
+    <script th:src="@{/multiForm.js}"></script>
 </section>
 </body>
 </html>
