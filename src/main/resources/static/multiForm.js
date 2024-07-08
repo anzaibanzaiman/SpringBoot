@@ -1,7 +1,9 @@
 
+//window.addEventListener('DOMContentLoaded', addForm);
 
 let i = 0;
 function addForm() {
+/*
     if (i > 3){
         return;
     } else{
@@ -25,19 +27,35 @@ function addForm() {
 
         i++;
     }
+*/
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/tasks/multiCreationForm",
+        contentType: "application/json",
+        data: {
+            taskFormX: taskFormX;
+        }
+        success: function(data) {
+            const template = document.getElementById("template");
+            const newForm = template.cloneNode(true);
+            const parent = document.getElementById("container");
+            parent.appendChild(newForm);
+        },
+        error: function(XMLHttpRequest, status, errorThrown) {
+            console.error("エラーの発生", errorThrown)
+        }
+    });
+
 }
 
-window.addEventListener('DOMContentLoaded', addForm);
-
-/*
 function submitForm() {
     var formData = {};
 
     for(let s=0; s=<i; s++){
-        formData["summary"+s] = document.getElementById("summary"+s).value
-        formData["description"+s] = document.getElementById("description"+s).value
-        formData["status"+s] = document.getElementById("status"+s).value
-        formData["dayLimit"+s] = document.getElementById("dayLimit"+s).value
+        formData["summary"] = document.getElementById("summary"+s).value
+        formData["description"] = document.getElementById("description").value
+        formData["status"] = document.getElementById("status").value
+        formData["dayLimit"] = document.getElementById("dayLimit").value
     }
 
     var dataList = [];
@@ -58,4 +76,3 @@ function submitForm() {
             }
     });
 }
-*/

@@ -88,9 +88,8 @@ public class TaskController {
     }
 
     @GetMapping("/multiCreationForm")
-    public String multiCreationForm(@ModelAttribute TaskForm form, Model model) {
+    public String multiCreationForm(@ModelAttribute TaskFormX form, Model model) {
         return "tasks/multiForm";
-
     }
 
     // POST /tasks
@@ -99,7 +98,7 @@ public class TaskController {
         if (bindingResult.hasErrors()) {
             return "tasks/multiForm";
         }
-        taskService.create(form.toEntity());
+        //taskService.create(form.toEntity());
         return "redirect:/tasks";
     }
 }
