@@ -91,21 +91,21 @@ public class TaskController {
     }
 
     @GetMapping("/multiCreationForm")
-    public String multiCreationForm(@ModelAttribute TaskFormX form, Model model) {
+    public String multiCreationForm(@ModelAttribute TaskFormX form) {
         return "tasks/multiForm";
     }
 
     // POST /tasks
     @PostMapping("/multiCreationForm")
-    public String multiCreate(@Validated TaskFormX form, BindingResult bindingResult, Model model) {
+    public String multiCreate(@Validated TaskFormX form, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "tasks/multiForm";
         }
 
         List<List<String>> task = form.taskSeparate();
 
-        for (int i=0; i < task.size(); i++){
-            TaskForm taskForm = new TaskForm(task.get(i).get(0),task.get(i).get(1),task.get(i).get(2),task.get(i).get(3));
+        for (List<String> strings : task) {
+            TaskForm taskForm = new TaskForm(strings.get(0), strings.get(1), strings.get(2), strings.get(3));
             taskService.create(taskForm.toEntity());
         }
 

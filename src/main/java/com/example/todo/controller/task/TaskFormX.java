@@ -25,13 +25,15 @@ public record TaskFormX(
         List<List<String>> tasks = new ArrayList<>();
 
         for (int i=0; i < summary.size(); i++){
-            List<String> task = new ArrayList<>();
-            task.add(summary.get(i));
-            task.add(description.isEmpty() ? "" : description.get(i));
-            task.add(status.get(i));
-            task.add(dayLimit.get(i));
+            if (!(summary.get(i).isEmpty() || !(status.get(i).equals("TODO") || status.get(i).equals("DOING") || status.get(i).equals("DONE")) || dayLimit.get(i).isEmpty())){
+                List<String> task = new ArrayList<>();
+                task.add(summary.get(i));
+                task.add(description.isEmpty() ? "" : description.get(i));
+                task.add(status.get(i));
+                task.add(dayLimit.get(i));
 
-            tasks.add(task);
+                tasks.add(task);
+            }
         }
         return tasks;
     }
