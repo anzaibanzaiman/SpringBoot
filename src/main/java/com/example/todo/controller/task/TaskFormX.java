@@ -2,57 +2,33 @@ package com.example.todo.controller.task;
 
 import com.example.todo.service.task.TaskEntity;
 import com.example.todo.service.task.TaskStatus;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.SneakyThrows;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public record TaskFormX(
-    @NotBlank
-    @Size(max = 256, message = "256文字以内で入力してください")
-    String summary,
-    String description,
-    @NotBlank
-    @Pattern(regexp="TODO|DOING|DONE", message = "Todo, Doing, Done のいずれかを選択してください")
-    String status,
-    @Pattern(regexp="\\d{4}/\\d{2}/\\d{2}", message = "yyyy/MM/ddの形式で入力してください")
-    String dayLimit
+    List<String> summary,
+    List<String> description,
+    List<String> status,
+    List<String> dayLimit
 ) {
-    public static TaskFormX formEntity(TaskEntity taskEntity) {
-        SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
-        return new TaskFormX(
-            taskEntity.summary(),
-            taskEntity.description(),
-            taskEntity.status().name(),
-            date.format(taskEntity.dayLimit())
-        );
-    }
+    public List<List<String>> taskSeparate() {
 
-    @SneakyThrows
-    public TaskEntity toEntity() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        Date date = null;
-        try {
-            date = sdf.parse(dayLimit());
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        return new TaskEntity(null, summary(), description(), TaskStatus.valueOf(status()), date);
-    }
+        List<List<String>> tasks = new ArrayList<>();
 
-    @SneakyThrows
-    public TaskEntity toEntity(long id) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        Date date = null;
-        try {
-            date = sdf.parse(dayLimit());
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+        for (int i=0; i < summary.size(); i++){
+            List<String> task = new ArrayList<>();
+            task.add(summary.get(i) != null ? summary.get(i) : "");
+            task.add(description.get(i) != null ? description.get(i) : "");
+            task.add(status.get(i) != null ? status.get(i) : "TODO");
+            task.add(dayLimit.get(i) != null ? dayLimit.get(i) : "2000/01/01");
+
+            tasks.add(task);
         }
-        return new TaskEntity(id, summary(), description(), TaskStatus.valueOf(status()), date);
+        return tasks;
     }
 }

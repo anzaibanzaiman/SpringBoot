@@ -8,6 +8,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.Normalizer;
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/tasks")
@@ -98,7 +101,14 @@ public class TaskController {
         if (bindingResult.hasErrors()) {
             return "tasks/multiForm";
         }
-        //taskService.create(form.toEntity());
+
+        List<List<String>> task = form.taskSeparate();
+
+        for (int i=0; i < task.size(); i++){
+            TaskForm taskForm = new TaskForm(task.get(i).get(0),task.get(i).get(1),task.get(i).get(2),task.get(i).get(3));
+            taskService.create(taskForm.toEntity());
+        }
+
         return "redirect:/tasks";
     }
 }

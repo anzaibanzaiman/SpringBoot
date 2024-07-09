@@ -16,7 +16,6 @@ public record TaskSearchForm(
             .orElse(List.of());
 
         return new TaskSearchEntity(summary(), statusEntityList);
-
     }
 
     public TaskSearchDTO toDTO() {

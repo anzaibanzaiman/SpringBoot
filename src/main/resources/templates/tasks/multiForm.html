@@ -9,8 +9,8 @@
 <body>
 <section layout:fragment="content">
     <div>
-        <form th:action="@{/tasks/multiCreationForm}" th:method="post" th:each="taskFormX : ${taskFormX}"  th:object="${taskFormX}">
-            <div th:fragment id="template">
+        <form th:action="@{/tasks/multiCreationForm}" th:method="post" th:object="${taskFormX}">
+            <template id="template">
                 <div class="form-group mt-3">
                     <label for="summaryInput" class="form-label">概要</label>
                     <input type="text" id="summaryInput" th:field="*{summary}" class="form-control">
@@ -31,8 +31,7 @@
                     <label for="dayLimitInput" class="form-label">期限</label>
                     <input type="text" id="dayLimitInput" th:field="*{dayLimit}" class="form-control">
                 </div>
-            </div>
-
+            </template>
             <section id="container"></section>
 
             <div>
