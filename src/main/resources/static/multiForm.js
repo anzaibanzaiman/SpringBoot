@@ -11,6 +11,7 @@ function addForm() {
         const newForm = template.content.cloneNode(true);
         const parent = document.getElementById("container");
         parent.appendChild(newForm);
+
         i++;
     }
 }
