@@ -102,10 +102,9 @@ public class TaskController {
             return "tasks/multiForm";
         }
 
-        List<List<String>> task = form.taskSeparate();
+        List<TaskForm> taskFormList = form.toTaskFormList();
 
-        for (List<String> strings : task) {
-            TaskForm taskForm = new TaskForm(strings.get(0), strings.get(1), strings.get(2), strings.get(3));
+        for (TaskForm taskForm : taskFormList) {
             taskService.create(taskForm.toEntity());
         }
 

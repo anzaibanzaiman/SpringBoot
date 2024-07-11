@@ -20,21 +20,17 @@ public record TaskFormX(
     @NotEmpty
     List<String> dayLimit
 ) {
-    public List<List<String>> taskSeparate() {
+    public  List<TaskForm> toTaskFormList(){
 
-        List<List<String>> tasks = new ArrayList<>();
+        List<TaskForm> toTaskFormList = new ArrayList<>();
 
         for (int i=0; i < summary.size(); i++){
-            if (!(summary.get(i).isEmpty() || !(status.get(i).equals("TODO") || status.get(i).equals("DOING") || status.get(i).equals("DONE")) || dayLimit.get(i).isEmpty())){
-                List<String> task = new ArrayList<>();
-                task.add(summary.get(i));
-                task.add(description.isEmpty() ? "" : description.get(i));
-                task.add(status.get(i));
-                task.add(dayLimit.get(i));
-
-                tasks.add(task);
+            if (!(summary.get(i).isEmpty() || !(status.get(i).equals("TODO") || status.get(i).equals("DOING") || status.get(i).equals("DONE")) || dayLimit.get(i).isEmpty())) {
+                String newDescription = description.isEmpty() ? "" : description.get(i);
+                TaskForm taskForm = new TaskForm(summary.get(i), newDescription, status.get(i), dayLimit.get(i));
+                toTaskFormList.add(taskForm);
             }
         }
-        return tasks;
+        return toTaskFormList;
     }
 }
