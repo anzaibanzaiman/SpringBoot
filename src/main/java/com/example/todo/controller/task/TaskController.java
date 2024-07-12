@@ -8,6 +8,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.Normalizer;
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/tasks")
@@ -84,6 +87,27 @@ public class TaskController {
     @DeleteMapping("{id}")
     public String delete(@PathVariable("id") long id) {
         taskService.delete(id);
+        return "redirect:/tasks";
+    }
+
+    @GetMapping("/multiCreationForm")
+    public String multiCreationForm(@ModelAttribute TaskFormX form) {
+        return "tasks/multiForm";
+    }
+
+    // POST /tasks/multiCreationForm
+    @PostMapping("/multiCreationForm")
+    public String multiCreate(@Validated TaskFormX form, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "tasks/multiForm";
+        }
+
+        List<TaskForm> taskFormList = form.toTaskFormList();
+
+        for (TaskForm taskForm : taskFormList) {
+            taskService.create(taskForm.toEntity());
+        }
+
         return "redirect:/tasks";
     }
 }
